@@ -7,7 +7,6 @@ module Lib
 
 import           Control.Applicative          ((<|>))
 import qualified Data.IntMap                  as M
-import           Data.List                    (elemIndices, sortOn)
 import           GHC.Read
 import qualified Text.ParserCombinators.ReadP as P
 import           Text.Read
@@ -66,7 +65,7 @@ type Rules = M.IntMap Rule
 input :: IO (Rules, [String])
 input = do
     mls <- map read . filter (not . null) . lines <$> readFile "input"
-    let rules = M.fromList . map (\(RuleLine n r) -> (n, r)) . sortOn (\(RuleLine n _) -> n)
+    let rules = M.fromList . map (\(RuleLine n r) -> (n, r))
               .filter (\case (RuleLine _ _) -> True
                              _ -> False) $ mls
         message = map (\(MessageLine cs) -> cs) . filter (\case (MessageLine _) -> True
